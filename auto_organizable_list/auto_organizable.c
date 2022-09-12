@@ -7,13 +7,13 @@ typedef struct node{
 	struct node* next;
 }node;
 
-node* make(int N);
+node* create(int N);
 
-int MTF(int* comando, int t, int n);
+int get_move_to_front_cost(int* comando, int t, int n);
 
-int TR(int* comando, int t, int n);
+int get_transpose_cost(int* comando, int t, int n);
 
-int C(int* comando, int t, int n);
+int get_count_cost(int* comando, int t, int n);
 
 int insert_end(node** head, int data);
 
@@ -38,9 +38,9 @@ int main(){
 		scanf("%d ",&comando[i]);
 
 	/*chamamos as funcoes que calculam os custos*/
-	custo_mtf += MTF(comando, R, N);
-	custo_tr += TR(comando, R, N);
-	custo_c += C(comando, R, N);
+	custo_mtf += get_move_to_front_cost(comando, R, N);
+	custo_tr += get_transpose_cost(comando, R, N);
+	custo_c += get_count_cost(comando, R, N);
 	
 	/*impressao dos custos*/
 	printf("%d %d %d\n", custo_mtf, custo_tr, custo_c);
@@ -52,7 +52,7 @@ int main(){
 }
 
 /*funcao que cria uma lista com N nos e chaves de 1 a N*/
-node* make(int N){
+node* create(int N){
 	node* head = NULL;
 	int i;
 
@@ -63,11 +63,11 @@ node* make(int N){
 }
 
 /*funcao que calcula o custo de move to front*/
-int MTF(int* comando, int t, int n){
+int get_move_to_front_cost(int* comando, int t, int n){
 	node* head, *prev, *next;
 	int i, custo = 0;
 	/*criamos a lista*/
-	head = make(n);
+	head = create(n);
 
 	/*para cada elemento em comando executamos o algoritmo
 	move to front e aumentamos o custo em 1 a cada acesso na lista*/
@@ -99,12 +99,12 @@ int MTF(int* comando, int t, int n){
 }
 
 /*funcao que calcula o custo de transpose*/
-int TR(int* comando, int t, int n){
+int get_transpose_cost(int* comando, int t, int n){
 	/*criamos 3 apontadores auxiliares para fazer a troca dos adjacentes*/
 	node* prev, *curr, *next, *head;
 	int i, custo = 0;
 	/*criamos a lista*/
-	head = make(n);
+	head = create(n);
 
 	for( i = 0; i < t; i++){	
 		prev = NULL;
@@ -144,13 +144,13 @@ int TR(int* comando, int t, int n){
 }
 
 /*funcao que calcula custo de count*/
-int C(int* comando, int t, int n){
+int get_count_cost(int* comando, int t, int n){
 	/*alem dos 2 apontadores para trocar os nos de posicao, precisamos de 
 	mais 2 apontadores para descobrir em que posicao o no sera inserido*/
 	int i, custo = 0;
 	node* head, *curr, *next, *troca, *troca_prev;
 	/*criamos a lista*/
-	head = make(n);
+	head = create(n);
 
 	for ( i = 0; i < t; i++){	
 		curr = NULL;

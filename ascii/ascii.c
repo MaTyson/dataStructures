@@ -1,3 +1,6 @@
+/**
+ * Print ASCII table
+ */
 #include<stdio.h>
 
 int main(){
